@@ -25,7 +25,7 @@ private slots:
 
 
 void iFacilityTest::test_user_add_profession() {
-    auto u = User::createUser("test", "test", "f", "s", "t");
+    auto u = User::createUser("test", "test", UserType::ADMINISTRATOR, "f", "s", "t");
 
     auto p1 = Profession::createProfession("test1");
     auto p2 = Profession::createProfession("test2");
@@ -48,7 +48,7 @@ void iFacilityTest::test_user_add_profession() {
 }
 
 void iFacilityTest::test_user_remove_profession() {
-    auto u = User::createUser("test", "test", "f", "s", "t");
+    auto u = User::createUser("test", "test", UserType::ADMINISTRATOR, "f", "s", "t");
 
     auto p1 = Profession::createProfession("test1");
 
@@ -60,7 +60,7 @@ void iFacilityTest::test_user_remove_profession() {
 }
 
 void iFacilityTest::test_user_current_profession() {
-    auto u = User::createUser("test", "test", "f", "s", "t");
+    auto u = User::createUser("test", "test", UserType::ADMINISTRATOR, "f", "s", "t");
 
     auto p1 = Profession::createProfession("test1");
     auto p2 = Profession::createProfession("test2");
@@ -77,7 +77,7 @@ void iFacilityTest::test_user_serialization() {
     QDataStream qdsw(&bytes, QIODevice::WriteOnly);
     QDataStream qdsr(&bytes, QIODevice::ReadOnly);
 
-    auto u1 = User::createUser("test", "test", "f", "s", "t");
+    auto u1 = User::createUser("test", "test", UserType::ADMINISTRATOR, "f", "s", "t");
 
     auto p1 = Profession::createProfession("test1");
     auto p2 = Profession::createProfession("test2");
