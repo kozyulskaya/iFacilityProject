@@ -1,5 +1,10 @@
 #include "user.h"
 
+UserType User::getUserType() const
+{
+    return mUserType;
+}
+
 UID User::uID() const {
     return mUID;
 }
@@ -32,13 +37,14 @@ PID User::getCurrentProfession() const {
     return mCurrentProfession;
 }
 
-User User::createUser(QString login, QString password,
+User User::createUser(QString login, QString password, UserType userType,
                       QString firstName, QString secondName, QString patronymic) {
     User u;
 
     u.mUID = QUuid::createUuid();
     u.mLogin = login;
     u.mPassword = password;
+    u.mUserType = userType;
     u.mFirstName = firstName;
     u.mSecondName = secondName;
     u.mPatronymic = patronymic;

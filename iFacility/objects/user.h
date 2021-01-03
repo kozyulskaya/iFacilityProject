@@ -10,11 +10,18 @@
 typedef QUuid UID;
 typedef QVector<PID> ProfessionsList;
 
+enum class UserType {
+    ADMINISTRATOR,
+    DISPATCHER,
+    WORKER
+};
+
 class User {
 private:
     UID mUID;
     QString mLogin;
     QString mPassword;
+    UserType mUserType;
     QString mFirstName;
     QString mSecondName;
     QString mPatronymic;
@@ -27,13 +34,14 @@ public:
     UID uID() const;
     QString getLogin() const;
     bool checkPassword(const QString &password);
+    UserType getUserType() const;
     QString firstName() const;
     QString secondName() const;
     QString patronymic() const;
     ProfessionsList getProfessions() const;
     PID getCurrentProfession() const;
 
-    static User createUser(QString login, QString password,
+    static User createUser(QString login, QString password, UserType userType,
                            QString firstName, QString secondName, QString patronymic);
 
     bool addProfession(const Profession &p);
