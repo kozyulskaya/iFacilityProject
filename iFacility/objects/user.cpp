@@ -52,35 +52,53 @@ User User::createUser(QString login, QString password, UserType userType,
     return u;
 }
 
-bool User::addProfession(const Profession &p) {
-    if (p.pID() == mCurrentProfession) {
-        return false;
-    }
-
-    if (!mProfessions.contains(p.pID())) {
-        if (mProfessions.size() >= 4) {
-            mProfessions.remove(0);
+bool User::hasProfession(PID pid) {
+    foreach (auto prof, mProfessions) {
+        if (prof.getProfession() == pid) {
+            return true;
         }
-        mProfessions.push_back(p.pID());
     }
 
-    return true;
+    return false;
 }
 
-bool User::setCurrentProfession(const Profession &p) {
-    if (!mProfessions.contains(p.pID())) {
+bool User::addProfession(const Profession &p, ProfRank rank) {
+    if (hasProfession(p.pID())) {
         return false;
     }
 
-    if (p.pID() != mCurrentProfession) {
-        mCurrentProfession = p.pID();
+    if (mProfessions.size() >= 4) {
+        mProfessions.remove(0);
     }
+    UserProfession up(p.pID(), rank);
 
+    mProfessions.push_back(up);
     return true;
 }
 
-void User::removeProfession(const Profession &p) {
-    mProfessions.removeAll(p.pID());
+bool User::setCurrentProfession(PID pid) {
+    if (!hasProfession(pid)) {
+        return false;
+    }
+
+    mCurrentProfession = pid;
+    return true;
+}
+
+void User::removeProfession(PID pid) {
+//    QMutableVectorIterator<UserProfession> i(mProfessions);
+//    while (i.hasNext()) {
+//        if (i.value().getProfession() == pid) {
+//            i.remove();
+//        }
+//    }
+
+    auto pred = [pid](UserProfession p) {
+            return p.getProfession() == pid;
+    };
+
+    mProfessions.erase(std::remove_if(mProfessions.begin(), mProfessions.end(), pred),
+                       mProfessions.end());
 }
 
 bool operator==(const User &l, const User &r) {

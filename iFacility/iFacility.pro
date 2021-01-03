@@ -12,12 +12,14 @@ SOURCES += \
     main.cpp \
     loginwindow.cpp \
     objects/profession.cpp \
-    objects/user.cpp
+    objects/user.cpp \
+    objects/userprofession.cpp
 
 HEADERS += \
     loginwindow.h \
     objects/profession.h \
-    objects/user.h
+    objects/user.h \
+    objects/userprofession.h
 
 FORMS += \
     loginwindow.ui

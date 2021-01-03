@@ -4,11 +4,13 @@
 #include <QString>
 #include <QUuid>
 #include <QVector>
+#include <QDate>
 
 #include "profession.h"
+#include "userprofession.h"
 
 typedef QUuid UID;
-typedef QVector<PID> ProfessionsList;
+typedef QVector<UserProfession> ProfessionsList;
 
 enum class UserType {
     ADMINISTRATOR,
@@ -44,9 +46,10 @@ public:
     static User createUser(QString login, QString password, UserType userType,
                            QString firstName, QString secondName, QString patronymic);
 
-    bool addProfession(const Profession &p);
-    bool setCurrentProfession(const Profession &p);
-    void removeProfession(const Profession &p);
+    bool hasProfession(PID pid);
+    bool addProfession(const Profession &p, ProfRank rank);
+    bool setCurrentProfession(PID pid);
+    void removeProfession(PID pid);
 
     friend bool operator==(const User &l, const User &r);
     friend QDataStream& operator<<(QDataStream &stream, const User &usr);
