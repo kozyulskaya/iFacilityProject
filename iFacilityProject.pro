@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    iFacility
+    iFacility \
+    iFacilityTests
