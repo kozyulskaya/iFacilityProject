@@ -51,18 +51,18 @@ bool User::addProfession(const Profession &p) {
         return false;
     }
 
-    if (!mProfessions.contains(p)) {
+    if (!mProfessions.contains(p.pID())) {
         if (mProfessions.size() >= 4) {
             mProfessions.remove(0);
         }
-        mProfessions.push_back(p);
+        mProfessions.push_back(p.pID());
     }
 
     return true;
 }
 
 bool User::setCurrentProfession(const Profession &p) {
-    if (!mProfessions.contains(p)) {
+    if (!mProfessions.contains(p.pID())) {
         return false;
     }
 
@@ -74,5 +74,25 @@ bool User::setCurrentProfession(const Profession &p) {
 }
 
 void User::removeProfession(const Profession &p) {
-    mProfessions.removeAll(p);
+    mProfessions.removeAll(p.pID());
+}
+
+bool operator==(const User &l, const User &r) {
+    return l.mUID == r.mUID && l.mLogin == r.mLogin;
+}
+
+QDataStream& operator<<(QDataStream &stream, const User &usr) {
+    stream << usr.mUID
+           << usr.mLogin << usr.mPassword
+           << usr.mFirstName << usr.mSecondName << usr.mPatronymic
+           << usr.mProfessions << usr.mCurrentProfession;
+    return stream;
+}
+
+QDataStream& operator>>(QDataStream &stream, User &usr) {
+    stream >> usr.mUID
+           >> usr.mLogin >> usr.mPassword
+           >> usr.mFirstName >> usr.mSecondName >> usr.mPatronymic
+           >> usr.mProfessions >> usr.mCurrentProfession;
+    return stream;
 }
