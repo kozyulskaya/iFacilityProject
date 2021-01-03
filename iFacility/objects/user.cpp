@@ -88,7 +88,7 @@ bool operator==(const User &l, const User &r) {
 }
 
 QDataStream& operator<<(QDataStream &stream, const User &usr) {
-    stream << usr.mUID
+    stream << usr.mUID << usr.mUserType
            << usr.mLogin << usr.mPassword
            << usr.mFirstName << usr.mSecondName << usr.mPatronymic
            << usr.mProfessions << usr.mCurrentProfession;
@@ -96,7 +96,7 @@ QDataStream& operator<<(QDataStream &stream, const User &usr) {
 }
 
 QDataStream& operator>>(QDataStream &stream, User &usr) {
-    stream >> usr.mUID
+    stream >> usr.mUID >> usr.mUserType
            >> usr.mLogin >> usr.mPassword
            >> usr.mFirstName >> usr.mSecondName >> usr.mPatronymic
            >> usr.mProfessions >> usr.mCurrentProfession;
