@@ -7,8 +7,10 @@ CONFIG -= app_bundle
 TEMPLATE = app
 
 SOURCES +=  tst_ifacilitytest.cpp \
+            ..\iFacility\objects\userprofession.cpp \
             ..\iFacility\objects\profession.cpp \
             ..\iFacility\objects\user.cpp
 
-HEADERS +=  ..\iFacility\objects\profession.h \
+HEADERS +=  ..\iFacility\objects\userprofession.h \
+            ..\iFacility\objects\profession.h \
             ..\iFacility\objects\user.h
