@@ -13,9 +13,9 @@ typedef QUuid UID;
 typedef QVector<UserProfession> ProfessionsList;
 
 enum class UserType {
-    ADMINISTRATOR,
-    DISPATCHER,
-    WORKER
+    ADMINISTRATOR = 0,
+    DISPATCHER = 1,
+    WORKER = 2
 };
 
 class User {
@@ -30,6 +30,8 @@ private:
     ProfessionsList mProfessions;
     PID mCurrentProfession = 0;
 
+    friend class RegistrationDialog;
+
 public:
     User() = default;
 
@@ -43,11 +45,11 @@ public:
     ProfessionsList getProfessions() const;
     PID getCurrentProfession() const;
 
-    static User createUser(QString login, QString password, UserType userType,
+    static User* createUser(QString login, QString password, UserType userType,
                            QString firstName, QString secondName, QString patronymic);
 
     bool hasProfession(PID pid);
-    bool addProfession(const Profession &p, ProfRank rank);
+    bool addProfession(PID pid, ProfRank rank);
     bool setCurrentProfession(PID pid);
     void removeProfession(PID pid);
 

@@ -14,17 +14,22 @@ SOURCES += \
     objects/profession.cpp \
     objects/user.cpp \
     objects/userprofession.cpp \
-    db/database.cpp
+    db/database.cpp \
+    registrationdialog.cpp \
+    viewmodels/userprofessionviewmodel.cpp
 
 HEADERS += \
     loginwindow.h \
     objects/profession.h \
     objects/user.h \
     objects/userprofession.h \
-    db/database.h
+    db/database.h \
+    registrationdialog.h \
+    viewmodels/userprofessionviewmodel.h
 
 FORMS += \
-    loginwindow.ui
+    loginwindow.ui \
+    registrationdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

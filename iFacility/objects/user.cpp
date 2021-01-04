@@ -37,17 +37,17 @@ PID User::getCurrentProfession() const {
     return mCurrentProfession;
 }
 
-User User::createUser(QString login, QString password, UserType userType,
-                      QString firstName, QString secondName, QString patronymic) {
-    User u;
+User* User::createUser(QString login, QString password, UserType userType,
+                       QString firstName, QString secondName, QString patronymic) {
+    User *u = new User();
 
-    u.mUID = QUuid::createUuid();
-    u.mLogin = login;
-    u.mPassword = password;
-    u.mUserType = userType;
-    u.mFirstName = firstName;
-    u.mSecondName = secondName;
-    u.mPatronymic = patronymic;
+    u->mUID = QUuid::createUuid();
+    u->mLogin = login;
+    u->mPassword = password;
+    u->mUserType = userType;
+    u->mFirstName = firstName;
+    u->mSecondName = secondName;
+    u->mPatronymic = patronymic;
 
     return u;
 }
@@ -62,15 +62,20 @@ bool User::hasProfession(PID pid) {
     return false;
 }
 
-bool User::addProfession(const Profession &p, ProfRank rank) {
-    if (hasProfession(p.pID())) {
+bool User::addProfession(PID pid, ProfRank rank) {
+    if (hasProfession(pid)) {
         return false;
     }
 
     if (mProfessions.size() >= 4) {
-        mProfessions.remove(0);
+        if (mCurrentProfession == mProfessions[0].getProfession()) {
+            mProfessions.remove(1);
+        }
+        else {
+            mProfessions.remove(0);
+        }
     }
-    UserProfession up(p.pID(), rank);
+    UserProfession up(pid, rank);
 
     mProfessions.push_back(up);
     return true;

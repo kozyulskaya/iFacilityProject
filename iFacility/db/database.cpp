@@ -99,7 +99,7 @@ bool Database::removeProfession(PID pid) {
 
 void Database::save() {
     QFile f(Database::mFilename);
-    f.open(QIODevice::ReadOnly);
+    f.open(QIODevice::WriteOnly);
     QDataStream stream(&f);
     stream << mProfessions << mUsers;
     f.close();
@@ -112,7 +112,7 @@ void Database::load() {
     mUsers.clear();
     mProfessions.clear();
     QFile f(Database::mFilename);
-    f.open(QIODevice::WriteOnly);
+    f.open(QIODevice::ReadOnly);
     QDataStream stream(&f);
     stream >> mProfessions >> mUsers;
     f.close();
