@@ -46,18 +46,18 @@ void iFacilityTest::test_user_add_profession() {
     auto p4 = Profession::createProfession("test4");
     auto p5 = Profession::createProfession("test5");
 
-    u.addProfession(p1, 2);
-    QVERIFY(u.getProfessions().size() == 1);
+    u->addProfession(p1.pID(), 2);
+    QVERIFY(u->getProfessions().size() == 1);
 
-    u.addProfession(p1, 2);
-    QVERIFY(u.getProfessions().size() == 1);
+    u->addProfession(p1.pID(), 2);
+    QVERIFY(u->getProfessions().size() == 1);
 
-    u.addProfession(p2, 2);
-    u.addProfession(p3, 2);
-    u.addProfession(p4, 2);
-    u.addProfession(p5, 2);
-    QVERIFY(u.getProfessions().front().getProfession() == p2.pID());
-    QVERIFY(u.getProfessions().back().getProfession() == p5.pID());
+    u->addProfession(p2.pID(), 2);
+    u->addProfession(p3.pID(), 2);
+    u->addProfession(p4.pID(), 2);
+    u->addProfession(p5.pID(), 2);
+    QVERIFY(u->getProfessions().front().getProfession() == p2.pID());
+    QVERIFY(u->getProfessions().back().getProfession() == p5.pID());
 }
 
 void iFacilityTest::test_user_remove_profession() {
@@ -65,11 +65,11 @@ void iFacilityTest::test_user_remove_profession() {
 
     auto p1 = Profession::createProfession("test1");
 
-    u.addProfession(p1, 2);
-    QVERIFY(u.getProfessions().size() == 1);
+    u->addProfession(p1.pID(), 2);
+    QVERIFY(u->getProfessions().size() == 1);
 
-    u.removeProfession(p1.pID());
-    QVERIFY(u.getProfessions().isEmpty());
+    u->removeProfession(p1.pID());
+    QVERIFY(u->getProfessions().isEmpty());
 }
 
 void iFacilityTest::test_user_current_profession() {
@@ -78,11 +78,11 @@ void iFacilityTest::test_user_current_profession() {
     auto p1 = Profession::createProfession("test1");
     auto p2 = Profession::createProfession("test2");
 
-    u.addProfession(p1, 2);
+    u->addProfession(p1.pID(), 2);
 
-    QVERIFY(!u.setCurrentProfession(p2.pID()));
-    QVERIFY(u.setCurrentProfession(p1.pID()));
-    QVERIFY(u.getCurrentProfession() == p1.pID());
+    QVERIFY(!u->setCurrentProfession(p2.pID()));
+    QVERIFY(u->setCurrentProfession(p1.pID()));
+    QVERIFY(u->getCurrentProfession() == p1.pID());
 }
 
 void iFacilityTest::test_user_serialization() {
@@ -90,13 +90,13 @@ void iFacilityTest::test_user_serialization() {
     QDataStream qdsw(&bytes, QIODevice::WriteOnly);
     QDataStream qdsr(&bytes, QIODevice::ReadOnly);
 
-    auto u1 = User::createUser("test", "test", UserType::ADMINISTRATOR, "f", "s", "t");
+    auto u1 = *User::createUser("test", "test", UserType::ADMINISTRATOR, "f", "s", "t");
 
     auto p1 = Profession::createProfession("test1");
     auto p2 = Profession::createProfession("test2");
 
-    u1.addProfession(p1, 2);
-    u1.addProfession(p2, 2);
+    u1.addProfession(p1.pID(), 2);
+    u1.addProfession(p2.pID(), 2);
     u1.setCurrentProfession(p1.pID());
 
     qdsw << u1;
@@ -119,15 +119,15 @@ void iFacilityTest::test_db_add_user() {
     auto u6 = User::createUser("adm3", "test", UserType::ADMINISTRATOR, "f", "s", "t");
     auto u7 = User::createUser("adm1", "test", UserType::ADMINISTRATOR, "f", "s", "t");
 
-    QVERIFY(Database::instance()->addUser(u1));   // ok
-    QVERIFY(Database::instance()->addUser(u2));   // ok
-    QVERIFY(Database::instance()->addUser(u3));   // ok
-    QVERIFY(Database::instance()->addUser(u4));   // ok
-    QVERIFY(Database::instance()->addUser(u5));   // ok
-    QVERIFY(Database::instance()->addUser(u6));   // ok
-    QVERIFY(!Database::instance()->addUser(u7));  // u7 and u1 has same login
+    QVERIFY(Database::instance()->addUser(*u1));   // ok
+    QVERIFY(Database::instance()->addUser(*u2));   // ok
+    QVERIFY(Database::instance()->addUser(*u3));   // ok
+    QVERIFY(Database::instance()->addUser(*u4));   // ok
+    QVERIFY(Database::instance()->addUser(*u5));   // ok
+    QVERIFY(Database::instance()->addUser(*u6));   // ok
+    QVERIFY(!Database::instance()->addUser(*u7));  // u7 and u1 has same login
 
-    sampleUser = u1; // saved for later
+    sampleUser = *u1; // saved for later
 }
 
 void iFacilityTest::test_db_get_user_by_uid() {
@@ -161,7 +161,7 @@ void iFacilityTest::test_db_get_users_by_type() {
 void iFacilityTest::test_db_get_users_gy_profession() {
     auto usr1 = Database::instance()->getUser(sampleUser.getLogin());
     Profession p = Profession::createProfession("test_prof");
-    usr1->addProfession(p, 3);
+    usr1->addProfession(p.pID(), 3);
 
     QVERIFY(Database::instance()->addProfession(p));
 
