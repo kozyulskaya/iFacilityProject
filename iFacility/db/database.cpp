@@ -52,9 +52,49 @@ QVector<User*> Database::getUsersByType(UserType type) {
     return findUserByPredicat(pred);
 }
 
-QVector<User*> Database::getUsersByProfession(Profession prof) {
-    auto pred = [prof](User u) { return u.hasProfession(prof.pID()); };
+QVector<User*> Database::getUsersByProfession(PID pid) {
+    auto pred = [pid](User u) { return u.hasProfession(pid); };
     return findUserByPredicat(pred);
+}
+
+bool Database::removeUser(UID uid) {
+    auto prof = getUser(uid);
+    if (prof == nullptr) {
+        return false;
+    }
+    auto pred = [uid](User u) { return u.uID() == uid; };
+    mUsers.erase(std::remove_if(mUsers.begin(), mUsers.end(), pred),
+                 mUsers.end());
+    return true;
+}
+
+bool Database::addProfession(Profession prof) {
+    if (getProfession(prof.pID()) != nullptr) {
+        return false;
+    }
+    mProfessions.push_back(prof);
+    return true;
+}
+
+Profession* Database::getProfession(PID pid) {
+    auto it = std::find_if(mProfessions.begin(), mProfessions.end(),
+                           [pid](Profession p) { return p.pID() == pid; });
+    return it == mProfessions.end()? nullptr : it;
+}
+
+bool Database::removeProfession(PID pid) {
+    auto prof = getProfession(pid);
+    if (prof == nullptr) {
+        return false;
+    }
+    auto assignedUsers = getUsersByProfession(pid);
+    if (!assignedUsers.isEmpty()) {
+        return false;
+    }
+    auto pred = [pid](Profession p) { return p.pID() == pid; };
+    mProfessions.erase(std::remove_if(mProfessions.begin(), mProfessions.end(), pred),
+                       mProfessions.end());
+    return true;
 }
 
 void Database::save() {

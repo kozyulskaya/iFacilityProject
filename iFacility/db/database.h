@@ -34,9 +34,12 @@ public:
     User* getUser(UID uid);
     User* getUser(QString login);
     QVector<User*> getUsersByType(UserType type);
-    QVector<User*> getUsersByProfession(Profession prof);
+    QVector<User*> getUsersByProfession(PID pid);
+    bool removeUser(UID uid);
 
+    bool addProfession(Profession prof);
     Profession* getProfession(PID pid);
+    bool removeProfession(PID pid);
 
     void save();
     void load();

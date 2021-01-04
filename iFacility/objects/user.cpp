@@ -86,13 +86,6 @@ bool User::setCurrentProfession(PID pid) {
 }
 
 void User::removeProfession(PID pid) {
-//    QMutableVectorIterator<UserProfession> i(mProfessions);
-//    while (i.hasNext()) {
-//        if (i.value().getProfession() == pid) {
-//            i.remove();
-//        }
-//    }
-
     auto pred = [pid](UserProfession p) {
             return p.getProfession() == pid;
     };
