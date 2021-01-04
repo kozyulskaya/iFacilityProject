@@ -13,6 +13,7 @@ private:
     Q_OBJECT
 
     User sampleUser;
+    Profession sampleProfession;
 
 public:
     iFacilityTest() = default;
@@ -29,6 +30,9 @@ private slots:
     void test_db_get_user_by_login();
     void test_db_get_users_by_type();
     void test_db_get_users_gy_profession();
+    void test_db_remove_dependant_profession();
+    void test_db_remove_user();
+    void test_db_remove_independant_profession();
 };
 
 
@@ -158,10 +162,31 @@ void iFacilityTest::test_db_get_users_gy_profession() {
     auto usr1 = Database::instance()->getUser(sampleUser.getLogin());
     Profession p = Profession::createProfession("test_prof");
     usr1->addProfession(p, 3);
-    auto usrs = Database::instance()->getUsersByProfession(p);
+
+    QVERIFY(Database::instance()->addProfession(p));
+
+    auto usrs = Database::instance()->getUsersByProfession(p.pID());
 
     QVERIFY(usrs.size() == 1);
     QVERIFY(usr1 == usrs[0]);
+
+    sampleProfession = p;
+}
+
+void iFacilityTest::test_db_remove_dependant_profession() {
+    QVERIFY(!Database::instance()->removeProfession(sampleProfession.pID()));
+}
+
+void iFacilityTest::test_db_remove_user() {
+    QVERIFY(Database::instance()->removeUser(sampleUser.uID()));
+    UID nonExistentUuid = 0;
+    QVERIFY(!Database::instance()->removeUser(nonExistentUuid));
+}
+
+void iFacilityTest::test_db_remove_independant_profession() {
+    QVERIFY(Database::instance()->removeProfession(sampleProfession.pID()));
+    PID nonExistentPuid = 0;
+    QVERIFY(!Database::instance()->removeProfession(nonExistentPuid));
 }
 
 QTEST_APPLESS_MAIN(iFacilityTest)
