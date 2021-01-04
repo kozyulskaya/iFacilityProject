@@ -13,13 +13,15 @@ SOURCES += \
     loginwindow.cpp \
     objects/profession.cpp \
     objects/user.cpp \
-    objects/userprofession.cpp
+    objects/userprofession.cpp \
+    db/database.cpp
 
 HEADERS += \
     loginwindow.h \
     objects/profession.h \
     objects/user.h \
-    objects/userprofession.h
+    objects/userprofession.h \
+    db/database.h
 
 FORMS += \
     loginwindow.ui

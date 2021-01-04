@@ -12,9 +12,9 @@ private:
     PID mPID;
     QString mTitle;
 
+public:
     Profession() = default;
 
-public:
     QString title() const;
     PID pID() const;
 
