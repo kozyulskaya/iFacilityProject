@@ -8,7 +8,6 @@ void ProfessionsViewModel::invalidateData() {
     beginResetModel();
 
     clear();
-    QStandardItemModel::setHeaderData(0, Qt::Orientation::Horizontal, "Professions");
     QStandardItem *rootNode = invisibleRootItem();
     foreach (auto prof, Database::instance()->professions()) {
         QStandardItem *profNode = new QStandardItem("Profession: " + prof.title());
@@ -23,9 +22,11 @@ void ProfessionsViewModel::invalidateData() {
                    up = uProf;
                 }
             }
-            QStandardItem *workerRank = new QStandardItem(tr("%1 rank").arg(up.getRank()));
-            QStandardItem *acqDateNode = new QStandardItem(
+            QStandardItem *workerUID = new QStandardItem("UID: " + worker->uID().toString());
+            QStandardItem *workerRank = new QStandardItem(tr("Rank: %1").arg(up.getRank()));
+            QStandardItem *acqDateNode = new QStandardItem("Acquisition date: " +
                         up.getAcquiredDate().toString(Qt::DateFormat::SystemLocaleShortDate));
+            workerNode->appendRow(workerUID);
             workerNode->appendRow(workerRank);
             workerNode->appendRow(acqDateNode);
             if (worker->getCurrentProfession() == prof.pID()) {

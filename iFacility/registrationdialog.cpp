@@ -7,6 +7,7 @@ RegistrationDialog::RegistrationDialog(QWidget *parent) :
 
     upvm = new UserProfessionViewModel(this);
     ui->userProfessions->setModel(upvm);
+    ui->userProfessions->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     connect(ui->userProfessions->selectionModel(),
             &QItemSelectionModel::selectionChanged,

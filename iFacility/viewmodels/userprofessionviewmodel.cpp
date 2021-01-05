@@ -19,7 +19,7 @@ QVariant UserProfessionViewModel::headerData(int section,
         case 0:
             return QString("Profession");
         case 1:
-            return QString("Date of acquirement");
+            return QString("Acquisition date");
         case 2:
             return QString("Rank");
         }
