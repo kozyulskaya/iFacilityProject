@@ -20,7 +20,8 @@ SOURCES += \
     viewmodels/administrationviewmodel.cpp \
     viewmodels/professionsviewmodel.cpp \
     viewmodels/userprofessionviewmodel.cpp \
-    viewmodels/workersviewmodel.cpp
+    viewmodels/workersviewmodel.cpp \
+    workerpanel.cpp
 
 HEADERS += \
     administrationpanel.h \
@@ -33,12 +34,14 @@ HEADERS += \
     viewmodels/administrationviewmodel.h \
     viewmodels/professionsviewmodel.h \
     viewmodels/userprofessionviewmodel.h \
-    viewmodels/workersviewmodel.h
+    viewmodels/workersviewmodel.h \
+    workerpanel.h
 
 FORMS += \
     administrationpanel.ui \
     loginwindow.ui \
-    registrationdialog.ui
+    registrationdialog.ui \
+    workerpanel.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
