@@ -182,7 +182,7 @@ public:
      * @brief Определение оператора ввода в поток
      * 
      * @param stream поток
-     * @param prof объект класса
+     * @param usr объект класса
      * @return QDataStream& ссылка на поток
      */
     friend QDataStream& operator<<(QDataStream &stream, const User &usr);
@@ -190,7 +190,7 @@ public:
      * @brief Определение оператора ввода из потока
      * 
      * @param stream поток
-     * @param prof объект класса
+     * @param usr объект класса
      * @return QDataStream& ссылка на поток
      */
     friend QDataStream& operator>>(QDataStream &stream, User &usr);
