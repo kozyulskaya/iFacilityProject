@@ -42,6 +42,8 @@ public:
     QString firstName() const;
     QString secondName() const;
     QString patronymic() const;
+    QString getFullName() const;
+    QString getFullNameShortForm() const;
     ProfessionsList getProfessions() const;
     PID getCurrentProfession() const;
 

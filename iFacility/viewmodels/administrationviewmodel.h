@@ -1,28 +1,27 @@
-#ifndef USERPROFESSIONVIEWMODEL_H
-#define USERPROFESSIONVIEWMODEL_H
+#ifndef ADMINISTRATIONVIEWMODEL_H
+#define ADMINISTRATIONVIEWMODEL_H
 
 #include <QAbstractTableModel>
-#include <QFont>
+#include <QVector>
 
 #include "../objects/user.h"
 #include "../db/database.h"
 
-class UserProfessionViewModel : public QAbstractTableModel {
+class AdministrationViewModel : public QAbstractTableModel {
 private:
     Q_OBJECT
 
-    User *mUser = nullptr;
+    QVector<User> mUserData;
 
 public:
-    UserProfessionViewModel(QObject *parent);
+    AdministrationViewModel(QObject *parent);
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const;
     QVariant headerData(int section, Qt::Orientation orientation, int role) const;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
 
-    void setUser(User *user);
     void invalidateData();
 };
 
-#endif // USERPROFESSIONVIEWMODEL_H
+#endif // ADMINISTRATIONVIEWMODEL_H

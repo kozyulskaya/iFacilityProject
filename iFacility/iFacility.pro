@@ -9,6 +9,7 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    administrationpanel.cpp \
     main.cpp \
     loginwindow.cpp \
     objects/profession.cpp \
@@ -16,18 +17,26 @@ SOURCES += \
     objects/userprofession.cpp \
     db/database.cpp \
     registrationdialog.cpp \
-    viewmodels/userprofessionviewmodel.cpp
+    viewmodels/administrationviewmodel.cpp \
+    viewmodels/professionsviewmodel.cpp \
+    viewmodels/userprofessionviewmodel.cpp \
+    viewmodels/workersviewmodel.cpp
 
 HEADERS += \
+    administrationpanel.h \
     loginwindow.h \
     objects/profession.h \
     objects/user.h \
     objects/userprofession.h \
     db/database.h \
     registrationdialog.h \
-    viewmodels/userprofessionviewmodel.h
+    viewmodels/administrationviewmodel.h \
+    viewmodels/professionsviewmodel.h \
+    viewmodels/userprofessionviewmodel.h \
+    viewmodels/workersviewmodel.h
 
 FORMS += \
+    administrationpanel.ui \
     loginwindow.ui \
     registrationdialog.ui
 

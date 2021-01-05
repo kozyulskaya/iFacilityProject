@@ -16,6 +16,7 @@ public:
     Profession() = default;
 
     QString title() const;
+    void setTitle(const QString &newTitle);
     PID pID() const;
 
     static Profession createProfession(const QString &title);

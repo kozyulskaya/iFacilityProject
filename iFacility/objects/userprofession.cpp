@@ -3,6 +3,7 @@
 UserProfession::UserProfession(PID pid, ProfRank rank) {
     mProfession = pid;
     mRank = rank;
+    mAcquired = QDate::currentDate();
 }
 
 PID UserProfession::getProfession() const {

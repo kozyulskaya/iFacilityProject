@@ -4,6 +4,10 @@ QString Profession::title() const {
     return mTitle;
 }
 
+void Profession::setTitle(const QString &newTitle) {
+    mTitle = newTitle;
+}
+
 PID Profession::pID() const {
     return mPID;
 }

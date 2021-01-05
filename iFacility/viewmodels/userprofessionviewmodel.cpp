@@ -5,7 +5,7 @@ UserProfessionViewModel::UserProfessionViewModel(QObject *parent) : QAbstractTab
 }
 
 int UserProfessionViewModel::rowCount(const QModelIndex &/*parent*/) const {
-    return mProfList.length();
+    return mUser != nullptr? mUser->getProfessions().length() : 0;
 }
 
 int UserProfessionViewModel::columnCount(const QModelIndex &/*parent*/) const {
@@ -16,41 +16,53 @@ QVariant UserProfessionViewModel::headerData(int section,
                                              Qt::Orientation orientation, int role) const {
     if (role == Qt::DisplayRole && orientation == Qt::Horizontal) {
         switch (section) {
-            case 0:
-                return QString("Profession");
-            case 1:
-                return QString("Date of acquirement");
-            case 2:
-                return QString("Rank");
+        case 0:
+            return QString("Profession");
+        case 1:
+            return QString("Date of acquirement");
+        case 2:
+            return QString("Rank");
         }
     }
     return QVariant();
 }
 
 QVariant UserProfessionViewModel::data(const QModelIndex &index, int role) const {
+    auto profs = mUser->getProfessions();
+    auto uProf = profs[index.row()];
+
     if (role == Qt::DisplayRole) {
-        auto item = mProfList[index.row()];
-        auto prof = Database::instance()->getProfession(item.getProfession());
+        auto prof = Database::instance()->getProfession(uProf.getProfession());
 
         int col = index.column();
         switch (col) {
-            case 0:
-                return prof == nullptr? "ERROR:UNKNOWN" : prof->title();
-            case 1:
-                return item.getAcquiredDate();
-            case 2:
-                return item.getRank();
+        case 0:
+            return prof == nullptr? "#ERROR!" : prof->title();
+        case 1:
+            return uProf.getAcquiredDate().toString(Qt::DateFormat::SystemLocaleShortDate);
+        case 2:
+            return uProf.getRank();
         }
 
         return "UNKNOWN FIELD";
+    }
+    else if (role == Qt::FontRole) {
+        if (uProf.getProfession() == mUser->getCurrentProfession()) {
+            QFont f;
+            f.setBold(true);
+            return f;
+        }
     }
 
     return QVariant();
 }
 
-void UserProfessionViewModel::setProfessionsList(const ProfessionsList &profList) {
+void UserProfessionViewModel::setUser(User *user) {
+    mUser = user;
+    invalidateData();
+}
+
+void UserProfessionViewModel::invalidateData() {
     beginResetModel();
-    mProfList.clear();
-    mProfList += profList;
     endResetModel();
 }

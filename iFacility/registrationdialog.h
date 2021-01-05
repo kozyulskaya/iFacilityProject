@@ -31,6 +31,7 @@ public slots:
     void accept() Q_DECL_OVERRIDE;
 
     void addNewProfession();
+    void setCurrentProfession();
     void removeOldProfession();
 };
 

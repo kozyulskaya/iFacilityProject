@@ -29,6 +29,14 @@ QString User::patronymic() const {
     return mPatronymic;
 }
 
+QString User::getFullName() const {
+    return QString("%1 %2 %3").arg(mSecondName).arg(mFirstName).arg(mPatronymic);
+}
+
+QString User::getFullNameShortForm() const {
+    return QString("%1 %2.%3.").arg(mSecondName).arg(mFirstName[0]).arg(mPatronymic[0]);
+}
+
 ProfessionsList User::getProfessions() const {
     return mProfessions;
 }
@@ -69,11 +77,9 @@ bool User::addProfession(PID pid, ProfRank rank) {
 
     if (mProfessions.size() >= 4) {
         if (mCurrentProfession == mProfessions[0].getProfession()) {
-            mProfessions.remove(1);
+            return false;
         }
-        else {
-            mProfessions.remove(0);
-        }
+        mProfessions.remove(0);
     }
     UserProfession up(pid, rank);
 
@@ -91,12 +97,14 @@ bool User::setCurrentProfession(PID pid) {
 }
 
 void User::removeProfession(PID pid) {
-    auto pred = [pid](UserProfession p) {
-            return p.getProfession() == pid;
-    };
-
-    mProfessions.erase(std::remove_if(mProfessions.begin(), mProfessions.end(), pred),
-                       mProfessions.end());
+    auto pred = [pid](UserProfession p) { return p.getProfession() == pid; };
+    if (pid == mCurrentProfession) {
+        mCurrentProfession = 0;
+    }
+    mProfessions.erase(
+                std::remove_if(mProfessions.begin(), mProfessions.end(), pred),
+                mProfessions.end()
+    );
 }
 
 bool operator==(const User &l, const User &r) {

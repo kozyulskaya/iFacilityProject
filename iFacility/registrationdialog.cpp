@@ -7,6 +7,23 @@ RegistrationDialog::RegistrationDialog(QWidget *parent) :
 
     upvm = new UserProfessionViewModel(this);
     ui->userProfessions->setModel(upvm);
+
+    connect(ui->userProfessions->selectionModel(),
+            &QItemSelectionModel::selectionChanged,
+            this,
+            [this]() {
+                auto rows = ui->userProfessions->selectionModel()->selectedRows();
+                ui->btnSetProfessionCurrent->setEnabled(rows.size() == 1);
+                ui->btnRemoveProfession->setEnabled(rows.size() >= 1);
+            }
+    );
+
+    connect(ui->userGroup,
+            QOverload<int>::of(&QComboBox::currentIndexChanged),
+            [this](int newIdx) {
+                ui->professionsGroup->setVisible((UserType)newIdx == UserType::WORKER);
+            }
+    );
 }
 
 RegistrationDialog::~RegistrationDialog() {
@@ -18,10 +35,12 @@ RegistrationDialog::~RegistrationDialog() {
 void RegistrationDialog::lockUserType(UserType type) {
     ui->userGroup->setCurrentIndex((int)type);
     ui->userGroup->setEnabled(false);
+    ui->professionsGroup->setVisible(type == UserType::WORKER);
 }
 
 void RegistrationDialog::setUser(User *usr) {
     user = usr;
+    upvm->setUser(user);
 
     if (mEditMode) {
         ui->firstName->setText(user->firstName());
@@ -33,7 +52,6 @@ void RegistrationDialog::setUser(User *usr) {
         ui->password->setEnabled(usr->getUserType() == UserType::ADMINISTRATOR);
         ui->userGroup->setCurrentIndex((int)user->getUserType());
         ui->userGroup->setEnabled(false);
-        upvm->setProfessionsList(user->getProfessions());
     }
 }
 
@@ -63,6 +81,8 @@ void RegistrationDialog::accept() {
     }
     else {
         auto u = User::createUser(login, pass, type, fname, sname, patr);
+        u->mProfessions = user->mProfessions;
+        u->setCurrentProfession(user->getCurrentProfession());
         std::swap(*user, *u);
         delete u;
     }
@@ -87,12 +107,39 @@ void RegistrationDialog::addNewProfession() {
         int r = QInputDialog::getInt(this, "Profession rank", "", 1, 1, 2e5, 1, &ok);
         if (ok) {
             user->addProfession(pid, r);
+            upvm->invalidateData();
             return;
         }
     }
     QMessageBox::critical(this, "Error", "Aborted by user or selected non-existant profession");
 }
 
-void RegistrationDialog::removeOldProfession() {
+void RegistrationDialog::setCurrentProfession() {
+    auto rows = ui->userProfessions->selectionModel()->selectedRows();
+    if (rows.isEmpty() || rows.size() > 1) {
+        return;
+    }
+    auto uProf = user->getProfessions()[rows[0].row()];
+    user->setCurrentProfession(uProf.getProfession());
+    upvm->invalidateData();
+}
 
+void RegistrationDialog::removeOldProfession() {
+    auto rows = ui->userProfessions->selectionModel()->selectedRows();
+    if (rows.isEmpty()) {
+        return;
+    }
+    QMessageBox remconf(this);
+    remconf.setIcon(QMessageBox::Question);
+    remconf.setWindowTitle("Remove confirmation");
+    remconf.setText("Are you sure you want to remove this profession?");
+    remconf.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+    remconf.setDefaultButton(QMessageBox::No);
+    if (remconf.exec() == QMessageBox::No) {
+        return;
+    }
+    for (int i = rows.size() - 1; i >= 0; i--) {
+        user->removeProfession(user->getProfessions()[rows[i].row()].getProfession());
+    }
+    upvm->invalidateData();
 }

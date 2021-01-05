@@ -8,6 +8,7 @@
 #include "db/database.h"
 
 #include "registrationdialog.h"
+#include "administrationpanel.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class LoginWindow; }

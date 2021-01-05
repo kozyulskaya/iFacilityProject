@@ -42,8 +42,17 @@ void LoginWindow::doLogin() {
         return;
     }
 
-    QMessageBox::information(this, "Info", "Success");
-    // TODO: Open valid window
+    QWidget *w;
+    if (user->getUserType() == UserType::WORKER) {
+        QMessageBox::information(this, "Ok", "Ok");
+        return;
+    }
+    else {
+        w = new AdministrationPanel();
+        ((AdministrationPanel*)w)->setUser(user);
+    }
+    w->show();
+    close();
 }
 
 void LoginWindow::validateForm() {
