@@ -28,7 +28,7 @@ AdministrationPanel::~AdministrationPanel() {
 
 void AdministrationPanel::setUser(User *user) {
     mUser = user;
-    ui->user->setText(user->getFullNameShortForm());
+    ui->user->setText(tr("Hello, **%1**").arg(user->getFullNameShortForm()));
     ui->administrationGroup->setVisible(user->getUserType() == UserType::ADMINISTRATOR);
 }
 

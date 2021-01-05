@@ -3,20 +3,24 @@
 
 #include <QMainWindow>
 
-namespace Ui {
-class WorkerPanel;
-}
+#include "objects/user.h"
+#include "viewmodels/userprofessionviewmodel.h"
 
-class WorkerPanel : public QMainWindow
-{
+namespace Ui { class WorkerPanel; }
+
+class WorkerPanel : public QMainWindow {
+private:
     Q_OBJECT
+
+    Ui::WorkerPanel *ui;
+    UserProfessionViewModel *upvm;
+    User *mUser;
 
 public:
     explicit WorkerPanel(QWidget *parent = nullptr);
     ~WorkerPanel();
 
-private:
-    Ui::WorkerPanel *ui;
+    void setUser(User *user);
 };
 
 #endif // WORKERPANEL_H

@@ -44,8 +44,8 @@ void LoginWindow::doLogin() {
 
     QWidget *w;
     if (user->getUserType() == UserType::WORKER) {
-        QMessageBox::information(this, "Ok", "Ok");
-        return;
+        w = new WorkerPanel();
+        ((WorkerPanel*)w)->setUser(user);
     }
     else {
         w = new AdministrationPanel();
