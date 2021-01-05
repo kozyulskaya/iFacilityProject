@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.13.3, 2021-01-04T18:26:48. -->
+<!-- Written by QtCreator 4.13.3, 2021-01-05T16:44:40. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -66,6 +66,14 @@
    </valuemap>
    <valuemap type="QVariantMap" key="AutoTest.CheckStates">
     <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:iFacilityTest">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_add_user">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_get_user_by_login">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_get_user_by_uid">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_get_users_by_type">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_get_users_gy_profession">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_remove_dependant_profession">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_remove_independant_profession">Checked</value>
+    <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_db_remove_user">Checked</value>
     <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_user_add_profession">Checked</value>
     <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_user_current_profession">Checked</value>
     <value type="Qt::CheckState" key="C:/Users/Admin/Documents/repos/iFacilityProject/iFacilityTests/tst_ifacilitytest.cpp:test_user_remove_profession">Checked</value>
