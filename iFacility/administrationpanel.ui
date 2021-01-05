@@ -272,7 +272,7 @@
    <sender>btnLogout</sender>
    <signal>clicked()</signal>
    <receiver>AdministrationPanel</receiver>
-   <slot>doLogout()</slot>
+   <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>137</x>

@@ -51,10 +51,6 @@ void AdministrationPanel::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
 }
 
-void AdministrationPanel::doLogout() {
-    close();
-}
-
 void AdministrationPanel::addAdministration() {
     QStringList items = {
         "Administrator",
