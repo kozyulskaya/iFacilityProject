@@ -17,8 +17,6 @@ AdministrationPanel::AdministrationPanel(QWidget *parent) :
 
     emit invalidateTables();
 }
-\\*
-**
 
 AdministrationPanel::~AdministrationPanel() {
     delete ui;
@@ -30,7 +28,7 @@ AdministrationPanel::~AdministrationPanel() {
 
 void AdministrationPanel::setUser(User *user) {
     mUser = user;
-    ui->user->setText(tr("Привет, **%1**").arg(user->getFullNameShortForm()));
+    ui->user->setText(tr("Hello, **%1**").arg(user->getFullNameShortForm()));
     ui->administrationGroup->setVisible(user->getUserType() == UserType::ADMINISTRATOR);
 }
 
